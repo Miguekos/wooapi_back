@@ -3,7 +3,7 @@ version: "2"
 services:
   apiwoo:
     # container_name: apiwoo
-    image: apiwoo:1.0
+    image: apiwoo:1.1
 #      build: .
     command: python3 main.py
     ports:
