@@ -10,5 +10,5 @@ RUN     pip install -r requeriment.txt
 #ADD bootstrap.sh /code/
 #RUN bash -c "/code/bootstrap.sh"
 
-EXPOSE  6000
+EXPOSE  8050
 #CMD     ["python", "main.py"]
