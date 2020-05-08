@@ -1,0 +1,10 @@
+# docker-compose.yml
+version: "2"
+services:
+  apiwoo:
+    # container_name: apiwoo
+    image: apiwoo:1.0
+#      build: .
+    command: python3 main.py
+    ports:
+      - "6000:6000"
