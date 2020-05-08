@@ -24,7 +24,7 @@ def woocommerce_product():
     json = request.get_json()
     # print(json['registros'])
     # asd = wcapi.get("products", params={"per_page": json['registros']}).json()
-    asd = wcapi.get("products", params={"per_page": 100}).json()
+    asd = wcapi.get("products", params={"per_page": 100, "id" : 1}).json()
     print(asd)
     print(len(asd))
     print(type(asd))
@@ -45,4 +45,4 @@ def woocommerce_ordenes():
 
 if __name__ == '__main__':
     # app.run()
-    app.run(host='0.0.0.0', port=6000, debug=True)
+    app.run(host='0.0.0.0', port=8050, debug=True)
