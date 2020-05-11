@@ -2,10 +2,11 @@ FROM    python:3.6
 
 WORKDIR /code
 
-COPY    *.py /code/
 COPY    *.txt /code/
 
 RUN     pip install -r requeriment.txt
+
+COPY    . /code/
 
 #ADD bootstrap.sh /code/
 #RUN bash -c "/code/bootstrap.sh"
