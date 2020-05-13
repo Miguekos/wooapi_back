@@ -5,6 +5,7 @@ WORKDIR /code
 COPY    *.txt /code/
 
 RUN     pip install -r requeriment.txt
+RUN     mkdir -p logs
 
 COPY    . /code/
 
