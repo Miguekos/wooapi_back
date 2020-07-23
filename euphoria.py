@@ -11,8 +11,8 @@ import json
 
 wcapi = API(
     url="https://euphoria.pe",
-    consumer_key="ck_0fecc5f80d1e4ec3593a378ccddc942cfab348e4",
-    consumer_secret="cs_6b145fae33ffcd6e8906bcdccebfac48e0c81962",
+    consumer_key="ck_24372cd19576ca2dacd27540ce4d88f391d2f9dd",
+    consumer_secret="cs_ac4f95f51cc9db55cf7cdb78a7facb0f82bb4329",
     version="wc/v3",
     timeout=20
 )
