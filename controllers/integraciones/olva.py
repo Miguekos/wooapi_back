@@ -37,8 +37,8 @@ def enviOlva():
         }
 
         # Servicio de Olva
-        headersOlva = {'Content-Type': 'application/json'}
-        response = requests.put('http://200.31.99.175:8080/RegistroRemito-1.0-SNAPSHOT/webresources/remito',
+        headersOlva = {'Content-Type': 'application/json', 'tokenSeguridad' : 'ZwJ7cwBg549F64VAqE8R2xACOmosjkMJN7IsTP0CwvQM4krK1nU4cg=='}
+        response = requests.put('http://wap.olvacourier.com:8080/RegistroRemito-1.0-SNAPSHOT/webresources/remito/generar',
                                 data=json.dumps(body_json), headers=headersOlva)
         rs = response.json()
         if rs['lista'] == []:
