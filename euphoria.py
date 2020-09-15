@@ -9,14 +9,21 @@ import json
 # )
 
 
+#wcapi = API(
+#    url="https://euphoria.pe",
+#    consumer_key="ck_24372cd19576ca2dacd27540ce4d88f391d2f9dd",
+#    consumer_secret="cs_ac4f95f51cc9db55cf7cdb78a7facb0f82bb4329",
+#    version="wc/v3",
+#    timeout=20
+#)
+
 wcapi = API(
     url="https://euphoria.pe",
-    consumer_key="ck_24372cd19576ca2dacd27540ce4d88f391d2f9dd",
-    consumer_secret="cs_ac4f95f51cc9db55cf7cdb78a7facb0f82bb4329",
+    consumer_key="ck_d7ac347b00f28c31c0e8b001759d34d59d4c6e9f",
+    consumer_secret="cs_9c74368749e724a18cd8dc1b06b7275781765eb6",
     version="wc/v3",
     timeout=20
 )
-
 
 # asd = wcapi.get("products", params={"per_page": 100}).json()
 # print(asd)
