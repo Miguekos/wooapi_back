@@ -15,13 +15,16 @@ from unicodedata import normalize
 # from test import ScraperSunarpPlacaPropietario
 from flask import Flask, request, jsonify
 from euphoria import wcapi
+
 # from wooapi import wcapi
 # import atuGobPe
 CORS(app, supports_credentials=True)
 
+
 @app.route('/', methods=['GET'])
 def woocommerce_home():
     return jsonify("Dev WooComerceApiPython")
+
 
 @app.route('/productos/<limit>', methods=['GET'])
 def woocommerce_product(limit):
@@ -32,10 +35,12 @@ def woocommerce_product(limit):
     return jsonify(productos)
     # return "{}".format(asd)
 
+
 @app.route('/productos/<id>', methods=['GET'])
 def woocommerce_product_id(id):
     asd = wcapi.get("products/{}".format(id), params={"per_page": 100}).json()
     return jsonify(asd)
+
 
 @app.route('/cupones', methods=['GET'])
 def woocommerce_cupones():
@@ -46,6 +51,7 @@ def woocommerce_cupones():
     cupones = wcapi.get("coupons").json()
     return jsonify(cupones)
     # return "{}".format(asd)
+
 
 @app.route('/ordenes/<limit>', methods=['GET'])
 def woocommerce_ordenes(limit):
@@ -58,12 +64,28 @@ def woocommerce_ordenes(limit):
     return jsonify(ordenes)
     # return "{}".format(asd)
 
+
 @app.route('/ordenes/<id>', methods=['GET'])
 def woocommerce_orden_id(id):
     asd = wcapi.get("orders/{}".format(id), params={"per_page": 100}).json()
     return jsonify(asd)
 
-
+@app.route('/ordenes/<id>/<idolva>', methods=['PUT'])
+def woocommerce_orden_update(id, idolva):
+    getPro = wcapi.get("orders/{}".format(id)).json()
+    for asd in getPro['meta_data']:
+        if (asd['key'] == "_wc_shipment_tracking_items"):
+            asd['value'][0]['tracking_number'] = idolva
+            asd['value'][0]['tracking_provider'] = "Olva"
+            # print(asd['value'][0]['tracking_number'])
+    # print(getPro['meta_data'][6]['value'][0])
+    # print(getPro['meta_data'])
+    data = {
+        "status": "despachado",
+        "meta_data": getPro['meta_data']
+    }
+    response = wcapi.put("orders/{}".format(id), data).json()
+    return jsonify(response)
 
 if __name__ == '__main__':
     # app.run()
