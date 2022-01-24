@@ -10,14 +10,15 @@ import json
 
 
 wcapi = API(
-    url="https://prueba.apps.com.pe",
-    consumer_key="ck_4bee3dbc20833081d3efb1c9a2fe9d579951e693",
-    consumer_secret="cs_9adf07d839c3e9e79a7b09df5b9fb4a42cd8a9b7",
-    version="wc/v3"
+    url="https://wordpressfive.apps.com.pe",
+    consumer_key="ck_82be01f54acaee8b37ed61a161a8fee07f75d4f7",
+    consumer_secret="cs_a93ae263eb2abd848b5f0ae8dc96079a1fe5b080",
+    version="wc/v3",
+    timeout=20
 )
 
 # r = wcapi.get("products").json()
-# # r = wcapi.get("orders")
+# r = wcapi.get("orders").json()
 # # asd = json.loads(r.text)
 # # print(type(asd))
 # print(r)

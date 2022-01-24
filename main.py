@@ -14,7 +14,7 @@ import re
 from unicodedata import normalize
 # from test import ScraperSunarpPlacaPropietario
 from flask import Flask, request, jsonify
-from euphoria import wcapi
+from apiwoo import wcapi
 
 # from wooapi import wcapi
 # import atuGobPe
