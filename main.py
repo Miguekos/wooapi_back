@@ -47,7 +47,7 @@ def woocommerce_cupones():
     # json = request.get_json()
     # print(json['registros'])
     # asd = wcapi.get("products", params={"per_page": json['registros']}).json()
-    # cupones = wcapi.get("coupons", params={"per_page": 100, "id" : 1}).json()
+    # cupones = wcapi.get("coupons", params={"per_page": 100, "id" mongolva: 1}).json()
     cupones = wcapi.get("coupons").json()
     return jsonify(cupones)
     # return "{}".format(asd)

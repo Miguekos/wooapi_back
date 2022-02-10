@@ -1,5 +1,7 @@
 import pymongo
-myclient = pymongo.MongoClient("mongodb://95.111.235.214:32773")
+# myclient = pymongo.MongoClient("mongodb://95.111.235.214:32773")
+myclient = pymongo.MongoClient("mongodb://95.111.235.214:32768")
+
 # myclient = pymongo.MongoClient("mongodb://127.0.0.1:27017")
 # app.config["MONGO_URI"] = "mongodb://127.0.0.1:27017/cuiappte"
 

@@ -1,8 +1,8 @@
-FROM    python:3.6
+FROM    python:3.7-slim
 
 WORKDIR /code
 
-COPY    *.txt /code/
+COPY    requeriment.txt /code/
 
 RUN     pip install -r requeriment.txt
 RUN     mkdir -p logs
