@@ -10,9 +10,9 @@ import json
 
 
 wcapi = API(
-    url="https://wordpressfive.apps.com.pe",
-    consumer_key="ck_82be01f54acaee8b37ed61a161a8fee07f75d4f7",
-    consumer_secret="cs_a93ae263eb2abd848b5f0ae8dc96079a1fe5b080",
+    url="https://www.rapunzelorganic.cl",
+    consumer_key="ck_712386a01acf9c4410b9bab7c29c714a93ac0986",
+    consumer_secret="cs_b1345222af870f72a9c0cdc7f0f94cafdb8e6cbb",
     version="wc/v3",
     timeout=20
 )

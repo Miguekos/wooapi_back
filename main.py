@@ -15,9 +15,11 @@ from unicodedata import normalize
 # from test import ScraperSunarpPlacaPropietario
 from flask import Flask, request, jsonify
 from apiwoo import wcapi
-
+from funciones import ValidaComuna
 # from wooapi import wcapi
 # import atuGobPe
+from database.mongodb import mycolnew, mycol
+
 CORS(app, supports_credentials=True)
 
 
@@ -53,15 +55,32 @@ def woocommerce_cupones():
     # return "{}".format(asd)
 
 
-@app.route('/ordenes/<limit>', methods=['GET'])
-def woocommerce_ordenes(limit):
+@app.route('/ordenes/<page>/<limit>', methods=['GET'])
+def woocommerce_ordenes(page, limit):
     # asd = wcapi.options("orders").json()
     # asd = wcapi.get("search").json()
-    ordenes = wcapi.get("orders", params={"per_page": limit}).json()
+    ordenes = []
+    d = 0
+    while d < int(page):
+        ordenes.extend(wcapi.get("orders", params={"page": d + 1, "per_page": limit}).json())
+        # print("pagina", d + 1)
+        d = d + 1
     # print(ordenes)
     # print(len(ordenes))
     # print(type(ordenes))
-    return jsonify(ordenes)
+    new_json_response = []
+    x = mycol.find({}, projection={"_id" : 0, "idpedido":1})
+    idpedidos = []
+    for d in  list(x):
+        idpedidos.append(d['idpedido'])
+
+    # print("resultStr", idpedidos)
+    for pedidos in ordenes:
+        validar = ValidaComuna(pedidos, idpedidos)
+        response = validar.logica_validations()
+        # print(response)
+        new_json_response.append(response)
+    return jsonify(new_json_response)
     # return "{}".format(asd)
 
 
@@ -69,6 +88,11 @@ def woocommerce_ordenes(limit):
 def woocommerce_orden_id(id):
     asd = wcapi.get("orders/{}".format(id), params={"per_page": 100}).json()
     return jsonify(asd)
+
+@app.route('/estatus/', methods=['GET'])
+def woocommerce_status():
+    response = wcapi.get("system_status").json()
+    return jsonify(response)
 
 @app.route('/ordenes/<id>/<idolva>', methods=['PUT'])
 def woocommerce_orden_update(id, idolva):
