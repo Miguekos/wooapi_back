@@ -69,14 +69,21 @@ def woocommerce_ordenes(page, limit):
     # print(len(ordenes))
     # print(type(ordenes))
     new_json_response = []
-    x = mycol.find({}, projection={"_id" : 0, "idpedido":1})
+    x = mycol.find({}, projection={"_id": 0})
     idpedidos = []
-    for d in  list(x):
+    pedidos_tipo_pago = []
+    for d in list(x):
+        print("d->", d)
         idpedidos.append(d['idpedido'])
+        pedidos_tipo_pago.append({
+            'id': d['idpedido'],
+            'tipo': d['registro']['tipodepago']
+        })
+        # if d['registro']['tipodepago']:
 
     # print("resultStr", idpedidos)
     for pedidos in ordenes:
-        validar = ValidaComuna(pedidos, idpedidos)
+        validar = ValidaComuna(pedidos, idpedidos, pedidos_tipo_pago)
         response = validar.logica_validations()
         # print(response)
         new_json_response.append(response)
@@ -89,10 +96,12 @@ def woocommerce_orden_id(id):
     asd = wcapi.get("orders/{}".format(id), params={"per_page": 100}).json()
     return jsonify(asd)
 
+
 @app.route('/estatus/', methods=['GET'])
 def woocommerce_status():
     response = wcapi.get("system_status").json()
     return jsonify(response)
+
 
 @app.route('/ordenes/<id>/<idolva>', methods=['PUT'])
 def woocommerce_orden_update(id, idolva):
@@ -110,6 +119,7 @@ def woocommerce_orden_update(id, idolva):
     }
     response = wcapi.put("orders/{}".format(id), data).json()
     return jsonify(response)
+
 
 if __name__ == '__main__':
     # app.run()

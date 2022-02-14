@@ -264,10 +264,12 @@ lista_comunas = [
 
 ]
 
+
 class ValidaComuna():
-    def __init__(self, obj, arg):
+    def __init__(self, obj, arg, tipo_pago):
         self.json_ = obj
         self.arg_ = arg
+        self.tipo_pago_ = tipo_pago
 
     def logica_validations(self):
         # print("self.json_->", self.json_)
@@ -275,6 +277,10 @@ class ValidaComuna():
         # n2 = "saNtiaop"
         numero = 0
         comuna = ''
+
+        def search(name, people):
+            return [element for element in people if element['id'] == name]
+
         for comunas in lista_comunas:
             valor = fuzz.ratio(comunas['name'].lower(), self.json_['billing']['city'].lower())
             if valor > numero:
@@ -282,12 +288,14 @@ class ValidaComuna():
                 comuna = comunas['name']
             if self.json_['id'] in self.arg_:
                 self.json_['enviado'] = True
+                self.json_['tipodepago'] = search(self.json_['id'], self.tipo_pago_)[0]['tipo']
             else:
                 self.json_['enviado'] = False
+                self.json_['tipodepago'] = ''
 
         # print(numero)
         # print(comuna)
         self.json_['billing']['city_ori'] = self.json_['billing']['city']
         self.json_['billing']['porcentaje'] = numero
         self.json_['billing']['city'] = comuna
-        return  self.json_
+        return self.json_

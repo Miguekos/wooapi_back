@@ -64,7 +64,7 @@ from fuzzywuzzy import fuzz
 # print(fuzz.partial_ratio(n1.lower(), n2.lower()))
 
 
-
+"""
 lista_comunas = [
     {
         "name": "SANTI"
@@ -330,8 +330,10 @@ lista_comunas = [
     }
 
 ]
+"""
 #
 #
+"""
 class ValidaComuna():
     def __init__(self, obj):
         self.json_ = obj
@@ -350,8 +352,8 @@ class ValidaComuna():
         # print(comuna)
         self.json_['billing']['city'] = comuna
         return  self.json_
-
-
+"""
+"""
 json_test = [
     {
         "_links": {
@@ -586,16 +588,44 @@ json_test = [
     }
 ]
 
-new_json_response = []
+"""
+# new_json_response = []
+# #
+# for pedidos in json_test:
+#     validar = ValidaComuna(pedidos)
+#     # print(validar.logica_validations())
+#     new_json_response.append(validar.logica_validations())
 #
-for pedidos in json_test:
-    validar = ValidaComuna(pedidos)
-    # print(validar.logica_validations())
-    new_json_response.append(validar.logica_validations())
-
-
-print("new_json_response->", new_json_response)
+#
+# print("new_json_response->", new_json_response)
 
 # print(fuzz.ratio(n1.lower(), n2.lower()))
 # print(fuzz.partial_ratio(n1.lower(), n2.lower()))
 # print(fuzz.token_sort_ratio(n1.lower(), n2.lower()))
+
+dicts = [
+    {
+        'name': 'Juan',
+        'id': 'Pagado'
+    },
+    {
+        'name': 'Pedro',
+        'id': 'Por Pagar'
+    }
+]
+
+values = [d['name'] for d in dicts if 'name' == '']
+print(values)
+
+people = [
+    {'name': "Tom", 'age': 10},
+    {'name': "Mark", 'age': 5},
+    {'name': "Pam", 'age': 7}
+]
+
+
+def search(name, people):
+    return [element for element in people if element['name'] == name]
+
+
+print(search('Tom', people))
