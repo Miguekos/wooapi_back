@@ -18,7 +18,7 @@ from apiwoo import wcapi
 from funciones import ValidaComuna
 # from wooapi import wcapi
 # import atuGobPe
-from database.mongodb import mycolnew, mycol
+from database.mongodb import mycolnew, mycol, mytexdevcomunas
 
 CORS(app, supports_credentials=True)
 
@@ -57,6 +57,8 @@ def woocommerce_cupones():
 
 @app.route('/ordenes/<page>/<limit>', methods=['GET'])
 def woocommerce_ordenes(page, limit):
+    comunas = mytexdevcomunas.find({}, projection={"_id": 0})
+    comunas = list(comunas)
     # asd = wcapi.options("orders").json()
     # asd = wcapi.get("search").json()
     ordenes = []
@@ -73,7 +75,6 @@ def woocommerce_ordenes(page, limit):
     idpedidos = []
     pedidos_tipo_pago = []
     for d in list(x):
-        print("d->", d)
         idpedidos.append(d['idpedido'])
         pedidos_tipo_pago.append({
             'id': d['idpedido'],
@@ -83,7 +84,7 @@ def woocommerce_ordenes(page, limit):
 
     # print("resultStr", idpedidos)
     for pedidos in ordenes:
-        validar = ValidaComuna(pedidos, idpedidos, pedidos_tipo_pago)
+        validar = ValidaComuna(pedidos, idpedidos, pedidos_tipo_pago, comunas)
         response = validar.logica_validations()
         # print(response)
         new_json_response.append(response)
