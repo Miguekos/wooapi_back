@@ -603,29 +603,45 @@ json_test = [
 # print(fuzz.partial_ratio(n1.lower(), n2.lower()))
 # print(fuzz.token_sort_ratio(n1.lower(), n2.lower()))
 
-dicts = [
-    {
-        'name': 'Juan',
-        'id': 'Pagado'
-    },
-    {
-        'name': 'Pedro',
-        'id': 'Por Pagar'
-    }
-]
+# dicts = [
+#     {
+#         'name': 'Juan',
+#         'id': 'Pagado'
+#     },
+#     {
+#         'name': 'Pedro',
+#         'id': 'Por Pagar'
+#     }
+# ]
+#
+# values = [d['name'] for d in dicts if 'name' == '']
+# print(values)
+#
+# people = [
+#     {'name': "Tom", 'age': 10},
+#     {'name': "Mark", 'age': 5},
+#     {'name': "Pam", 'age': 7}
+# ]
+#
+#
+# def search(name, people):
+#     return [element for element in people if element['name'] == name]
+#
+#
+# print(search('Tom', people))
 
-values = [d['name'] for d in dicts if 'name' == '']
-print(values)
 
-people = [
-    {'name': "Tom", 'age': 10},
-    {'name': "Mark", 'age': 5},
-    {'name': "Pam", 'age': 7}
-]
+# ini: 20409
+# fin: 30000
+n1 = 20409
+n2 = 30000
 
+asd = n1
 
-def search(name, people):
-    return [element for element in people if element['name'] == name]
+while n1 < n2:
+    print(n1 + 1)
+    asd = "{},{}".format(asd, n1 + 1)
+    # print(asd)
+    n1 = n1 + 1
 
-
-print(search('Tom', people))
+print(asd)

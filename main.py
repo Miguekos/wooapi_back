@@ -55,19 +55,44 @@ def woocommerce_cupones():
     # return "{}".format(asd)
 
 
-@app.route('/ordenes/<page>/<limit>', methods=['GET'])
-def woocommerce_ordenes(page, limit):
+@app.route('/ordenes/<page>/<limit>/<ini>/<fin>', methods=['GET'])
+def woocommerce_ordenes(page, limit, ini, fin):
     comunas = mytexdevcomunas.find({}, projection={"_id": 0})
     comunas = list(comunas)
     # asd = wcapi.options("orders").json()
     # asd = wcapi.get("search").json()
+    # ordenes = []
+    # d = 0
+    # while d < int(page):
+    #     ordenes.extend(wcapi.get("orders", params={"include" : ['20307', '20308']}).json())
+    #     # ordenes.extend(wcapi.get("orders", params={"page": d + 1, "per_page": limit, "parent": ['20307']}).json())
+    #     # print("pagina", d + 1)
+    #     d = d + 1
+    # ordenes = wcapi.get("orders", params={"per_page": limit}).json()
+
+
+    n1 = int(ini)
+    n2 = int(fin)
+
+    asd = n1
+
+    while n1 < n2:
+        # print(n1 + 1)
+        asd = "{},{}".format(asd, n1 + 1)
+        # print(asd)
+        n1 = n1 + 1
+
     ordenes = []
     d = 0
     while d < int(page):
-        ordenes.extend(wcapi.get("orders", params={"page": d + 1, "per_page": limit}).json())
+        ordenes.extend(wcapi.get("orders?include={}".format(asd), params={"page": d + 1, "per_page": limit}).json())
+        # ordenes.extend(wcapi.get("orders", params={"page": d + 1, "per_page": limit, "parent": ['20307']}).json())
         # print("pagina", d + 1)
         d = d + 1
-    # print(ordenes)
+
+    # ordenes = wcapi.get("orders?include={}".format(asd), params={"per_page": limit}).json()
+
+    print(ordenes)
     # print(len(ordenes))
     # print(type(ordenes))
     new_json_response = []

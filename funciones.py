@@ -1,4 +1,5 @@
 from fuzzywuzzy import fuzz
+from datetime import datetime
 
 class ValidaComuna():
     def __init__(self, obj, arg, tipo_pago, comunas):
@@ -38,4 +39,8 @@ class ValidaComuna():
         self.json_['billing']['porcentaje'] = numero
         self.json_['billing']['city'] = comuna
         self.json_['precio'] = precio
+        fecha = datetime.strptime(self.json_['date_created'], '%Y-%m-%dT%H:%M:%S')
+
+        # print("fecha-->", fecha.strftime("%d/%m/%Y"))
+        self.json_['fecha_registro'] = fecha.strftime("%d/%m/%Y %H:%M")
         return self.json_
