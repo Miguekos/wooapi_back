@@ -120,7 +120,7 @@ def woocommerce_ordenes(page, limit, ini, fin):
 
 
 @app.route('/ordenes/new', methods=['GET'])
-def woocommerce_ordenes():
+def woocommerce_ordenes_new():
     comunas = mytexdevcomunas.find({}, projection={"_id": 0})
     comunas = list(comunas)
     # ordenes = mycolrapun.aggregate([
