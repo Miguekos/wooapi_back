@@ -123,6 +123,7 @@ def woocommerce_ordenes(page, limit, ini, fin):
 def woocommerce_ordenes_new():
     comunas = mytexdevcomunas.find({}, projection={"_id": 0})
     comunas = list(comunas)
+    # print('comunas', comunas)
     # ordenes = mycolrapun.aggregate([
     #     {
     #      '$match': { status: { '$exists': true } }
@@ -137,9 +138,12 @@ def woocommerce_ordenes_new():
     # }
     # ], { allowDiskUse: true })
 
-    ordenes = mycolrapun.find({
-        "status": { "$exists": True }
-    })
+    ordenes = mycolrapun.find({}, projection={"_id": 0})
+
+    # ordenes = mycolrapun.find({
+    #     # "status": { '$exists': True }
+    # }, projection={"_id": 0})
+
     ordenes = list(ordenes)
     # asd = wcapi.options("orders").json()
     # asd = wcapi.get("search").json()
@@ -172,33 +176,37 @@ def woocommerce_ordenes_new():
     #     d = d + 1
 
     # # ordenes = wcapi.get("orders?include={}".format(asd), params={"per_page": limit}).json()
-
     print("ordenes", ordenes)
-    # print(len(ordenes))
-    # print(type(ordenes))
-    new_json_response = []
-    # x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
-    x = mycol.find({}, projection={"_id": 0})
-    # db.student.find({u1: { $gt: 30, $lt: 60}});
-    idpedidos = []
-    pedidos_tipo_pago = []
-    for d in list(x):
-        # print(d)
-        idpedidos.append(d['idpedido'])
-        pedidos_tipo_pago.append({
-            'id': d['idpedido'],
-            'tipo': d['registro']['tipodepago']
-        })
-        # if d['registro']['tipodepago']:
+    if len(ordenes) > 0:
+        # print(len(ordenes))
+        # print(type(ordenes))
+        new_json_response = []
+        # x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
+        x = mycol.find({}, projection={"_id": 0})
+        # db.student.find({u1: { $gt: 30, $lt: 60}});
+        idpedidos = []
+        pedidos_tipo_pago = []
+        for d in list(x):
+            # print(d)
+            idpedidos.append(d['idpedido'])
+            pedidos_tipo_pago.append({
+                'id': d['idpedido'],
+                'tipo': d['registro']['tipodepago']
+            })
+            # if d['registro']['tipodepago']:
 
-    # print("resultStr", idpedidos)
-    for pedidos in ordenes:
-        validar = ValidaComuna(pedidos, idpedidos, pedidos_tipo_pago, comunas)
-        response = validar.logica_validations()
-        # print(response)
-        new_json_response.append(response)
-    return jsonify(new_json_response)
-    # return "{}".format(asd)
+        # print("resultStr", idpedidos)
+        for pedidos in ordenes:
+            validar = ValidaComuna(pedidos, idpedidos, pedidos_tipo_pago, comunas)
+            response = validar.logica_validations()
+            # print(response)
+            new_json_response.append(response)
+        return jsonify(new_json_response)
+        # return "{}".format(asd)
+    else:
+        return jsonify({ "resp" : "no tiene ordenes" })
+
+
 
 @app.route('/ordenes/<id>', methods=['GET'])
 def woocommerce_orden_id(id):

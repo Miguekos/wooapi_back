@@ -10,7 +10,7 @@ mydb = myclient["woocomerce"]
 mycol = mydb["envios_rapunzel"]
 
 mydbrapun = myclient["webhook"]
-mycolrapun = mydb["rapuncel"]
+mycolrapun = mydbrapun["rapuncel"]
 
 mydbnew = myclient["envios"]
 mycolnew = mydbnew["envios_express"]
