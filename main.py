@@ -18,7 +18,7 @@ from apiwoo import wcapi
 from funciones import ValidaComuna
 # from wooapi import wcapi
 # import atuGobPe
-from database.mongodb import mycolnew, mycol, mytexdevcomunas
+from database.mongodb import mycolnew, mycol, mytexdevcomunas, mycolrapun
 
 CORS(app, supports_credentials=True)
 
@@ -70,7 +70,6 @@ def woocommerce_ordenes(page, limit, ini, fin):
     #     d = d + 1
     # ordenes = wcapi.get("orders", params={"per_page": limit}).json()
 
-
     n1 = int(ini)
     n2 = int(fin)
 
@@ -96,10 +95,13 @@ def woocommerce_ordenes(page, limit, ini, fin):
     # print(len(ordenes))
     # print(type(ordenes))
     new_json_response = []
-    x = mycol.find({}, projection={"_id": 0})
+    x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
+    # x = mycol.find({}, projection={"_id": 0})
+    # db.student.find({u1: { $gt: 30, $lt: 60}});
     idpedidos = []
     pedidos_tipo_pago = []
     for d in list(x):
+        # print(d)
         idpedidos.append(d['idpedido'])
         pedidos_tipo_pago.append({
             'id': d['idpedido'],
@@ -116,6 +118,87 @@ def woocommerce_ordenes(page, limit, ini, fin):
     return jsonify(new_json_response)
     # return "{}".format(asd)
 
+
+@app.route('/ordenes/new', methods=['GET'])
+def woocommerce_ordenes():
+    comunas = mytexdevcomunas.find({}, projection={"_id": 0})
+    comunas = list(comunas)
+    # ordenes = mycolrapun.aggregate([
+    #     {
+    #      '$match': { status: { '$exists': true } }
+    #     },
+    #     {
+    #     "$group":
+    #     {
+    #         "_id": "$id",
+    #         "data": { "$push": "$$ROOT" },
+    #         "count": { "$sum": 1 }
+    #     }
+    # }
+    # ], { allowDiskUse: true })
+
+    ordenes = mycolrapun.find({
+        status: { "$exists": true }
+    })
+
+    # asd = wcapi.options("orders").json()
+    # asd = wcapi.get("search").json()
+    # ordenes = []
+    # d = 0
+    # while d < int(page):
+    #     ordenes.extend(wcapi.get("orders", params={"include" : ['20307', '20308']}).json())
+    #     # ordenes.extend(wcapi.get("orders", params={"page": d + 1, "per_page": limit, "parent": ['20307']}).json())
+    #     # print("pagina", d + 1)
+    #     d = d + 1
+    # ordenes = wcapi.get("orders", params={"per_page": limit}).json()
+
+    # n1 = int(ini)
+    # n2 = int(fin)
+
+    # asd = n1
+
+    # while n1 < n2:
+    #     # print(n1 + 1)
+    #     asd = "{},{}".format(asd, n1 + 1)
+    #     # print(asd)
+    #     n1 = n1 + 1
+
+    # ordenes = []
+    # d = 0
+    # while d < int(page):
+    #     ordenes.extend(wcapi.get("orders?include={}".format(asd), params={"page": d + 1, "per_page": limit}).json())
+    #     # ordenes.extend(wcapi.get("orders", params={"page": d + 1, "per_page": limit, "parent": ['20307']}).json())
+    #     # print("pagina", d + 1)
+    #     d = d + 1
+
+    # # ordenes = wcapi.get("orders?include={}".format(asd), params={"per_page": limit}).json()
+
+    print(ordenes)
+    # print(len(ordenes))
+    # print(type(ordenes))
+    new_json_response = []
+    x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
+    # x = mycol.find({}, projection={"_id": 0})
+    # db.student.find({u1: { $gt: 30, $lt: 60}});
+    idpedidos = []
+    pedidos_tipo_pago = []
+    for d in list(x):
+        # print(d)
+        idpedidos.append(d['idpedido'])
+        pedidos_tipo_pago.append({
+            'id': d['idpedido'],
+            'tipo': d['registro']['tipodepago']
+        })
+        # if d['registro']['tipodepago']:
+
+    # print("resultStr", idpedidos)
+    for pedidos in ordenes:
+        validar = ValidaComuna(pedidos, idpedidos, pedidos_tipo_pago, comunas)
+        response = validar.logica_validations()
+        # print(response)
+        new_json_response.append(response)
+    return jsonify(new_json_response)
+    # return "{}".format(asd)
 
 @app.route('/ordenes/<id>', methods=['GET'])
 def woocommerce_orden_id(id):

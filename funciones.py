@@ -31,7 +31,7 @@ class ValidaComuna():
                 self.json_['tipodepago'] = search(self.json_['id'], self.tipo_pago_)[0]['tipo']
             else:
                 self.json_['enviado'] = False
-                self.json_['tipodepago'] = 'Por Pagar'
+                self.json_['tipodepago'] = 'Por pagar'
 
         # print(numero)
         # print(comuna)
