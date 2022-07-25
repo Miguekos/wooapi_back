@@ -177,8 +177,8 @@ def woocommerce_ordenes_new():
     # print(len(ordenes))
     # print(type(ordenes))
     new_json_response = []
-    x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
-    # x = mycol.find({}, projection={"_id": 0})
+    # x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
+    x = mycol.find({}, projection={"_id": 0})
     # db.student.find({u1: { $gt: 30, $lt: 60}});
     idpedidos = []
     pedidos_tipo_pago = []
