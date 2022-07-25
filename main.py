@@ -138,7 +138,7 @@ def woocommerce_ordenes_new():
     # ], { allowDiskUse: true })
 
     ordenes = mycolrapun.find({
-        status: { "$exists": true }
+        "status": { "$exists": True }
     })
 
     # asd = wcapi.options("orders").json()
