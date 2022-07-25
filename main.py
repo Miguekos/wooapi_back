@@ -176,13 +176,20 @@ def woocommerce_ordenes_new():
     #     d = d + 1
 
     # # ordenes = wcapi.get("orders?include={}".format(asd), params={"per_page": limit}).json()
-    print("ordenes", ordenes)
+    # print("ordenes", ordenes)
+    status = []
+    for x in ordenes:
+        print("x", x['id'])
+        status.append(x['id'])
+
+    print(max(status))
+    print(min(status))
     if len(ordenes) > 0:
         # print(len(ordenes))
         # print(type(ordenes))
         new_json_response = []
-        # x = mycol.find({"idpedido": {'$gte': int(ini), '$lte':int(fin)}}, projection={"_id": 0})
-        x = mycol.find({}, projection={"_id": 0})
+        x = mycol.find({"idpedido": {'$gte': int(min(status)), '$lte':int(max(status))}}, projection={"_id": 0})
+        # x = mycol.find({}, projection={"_id": 0})
         # db.student.find({u1: { $gt: 30, $lt: 60}});
         idpedidos = []
         pedidos_tipo_pago = []
