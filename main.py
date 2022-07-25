@@ -140,7 +140,7 @@ def woocommerce_ordenes_new():
     ordenes = mycolrapun.find({
         "status": { "$exists": True }
     })
-
+    ordenes = list(ordenes)
     # asd = wcapi.options("orders").json()
     # asd = wcapi.get("search").json()
     # ordenes = []
@@ -173,7 +173,7 @@ def woocommerce_ordenes_new():
 
     # # ordenes = wcapi.get("orders?include={}".format(asd), params={"per_page": limit}).json()
 
-    print(ordenes)
+    print("ordenes", ordenes)
     # print(len(ordenes))
     # print(type(ordenes))
     new_json_response = []
